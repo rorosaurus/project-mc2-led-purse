@@ -73,8 +73,12 @@
 #define NEOMATRIX
 #include "GifAnim_Impl.h"
 
+// the GPIO pin the button is wired to.  the other button wire goes to GND.
 #define BUTTON_PIN 35
-bool previousButtonState = HIGH;
+bool previousButtonState = LOW;
+
+// the number of seconds to display a gif before moving to the next one
+#define DISPLAY_TIME_SECONDS 10
 
 // If the matrix is a different size than the GIFs, allow panning through the GIF
 // while displaying it, or bouncing it around if it's smaller than the display
@@ -240,7 +244,9 @@ void loop() {
 	if (! gotnf) return;
     }
 
+    // if we push the button, move to the next gif file
     bool buttonState = digitalRead(BUTTON_PIN);
+//    Serial.println(buttonState);
     if (buttonState == LOW && previousButtonState == HIGH){
       lastTime = millis();
       new_file = 1;
