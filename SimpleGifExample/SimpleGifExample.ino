@@ -1,6 +1,7 @@
 #define BASICSPIFFS
 // Use NeoMatrix API, even if it may use the SmartMatrix backend depending on the CPU
 #define NEOMATRIX
+#define DISABLE_MATRIX_TEST
 #include "GifAnim_Impl.h"
 
 
@@ -11,22 +12,16 @@ int OFFSETY = 0;
 int FACTX = 0;
 int FACTY = 0;
 
-
-const char *pathname = "/gifs64/200_circlesmoke.gif";
+// this is the location of the gif you want to loop
+const char *pathname = "/gifs32x16/corkscrew.gif";
 
 // Setup method runs once, when the sketch starts
 void setup() {
-#ifdef ESP8266
-    // 32x32 GIFs on 24x32 display, hence offset of -4
-    OFFSETX = -4;
-    char *pathname = "/gifs/concentric_circles.gif";
-#endif
     sav_setup();
     if (sav_newgif(pathname)) delay(100000); // while 1 loop only triggers watchdog on ESP chips
 }
 
+// loop method continuously repeats after setup() is run
 void loop() {
     sav_loop();
 }
-
-// vim:sts=4:sw=4
