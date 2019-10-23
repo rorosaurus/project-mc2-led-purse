@@ -2,6 +2,14 @@
 
 [![Youtube Demo](demo.gif)](https://www.youtube.com/watch?v=3-5VtH-2Txw)
 
+# Hardware
+* Project Mc2 LED Purse (harvest a cheap 16x32px LED display): [Amazon](https://smile.amazon.com/dp/B071LQR2QG/), [Adafruit article](https://blog.adafruit.com/2019/03/06/issue-16-hackspace-magazine-can-i-hack-it-a-smart-pixel-purse-neopixels-making-hackspacemag-biglesp/)
+  * If you want to daisy-chain from this display, it's missing an output socket and ribbon cables:
+    * SMT 2x8 Male IDC Socket: [AliExpress](https://www.aliexpress.com/item/32989866598.html)
+    * 16P IDC Cable (might have come with your panel): [AliExpress](https://www.aliexpress.com/item/32873766356.html)
+* [PCB I designed to drive HUB75 panels with an ESP32](https://github.com/rorosaurus/esp32-hub75-driver) (optional, but simplifies your wiring)
+  * If you don't want to do that, you can wire the display yourself manually using dupont connectors following `ESP32_FORUM_PINOUT` from [MatrixHardware_ESP32_V0.h](https://github.com/pixelmatix/SmartMatrix/blob/teensylc/src/MatrixHardware_ESP32_V0.h)
+
 # Software
 
 ## Arduino
@@ -30,12 +38,10 @@ This is a more complicated sketch that loops between all gifs in the specified f
 ## GIFs
 The gifs are loaded onto the ESP32's SPIFFS: an integrated filesystem that shares the same flash memory as your program.  You have 4MB shared. Edit your own gifs using Photoshop or some other editor, then use [this Arduino IDE plugin](https://github.com/me-no-dev/arduino-esp32fs-plugin) to upload .gifs to your ESP32!
 
-# Hardware and wiring
-I recommend using the [PCB I designed to drive HUB75 panels with an ESP32](https://github.com/rorosaurus/esp32-hub75-driver), which simplifies your wiring. If you don't want to do that, you can wire the display yourself manually using `ESP32_FORUM_PINOUT` from [MatrixHardware_ESP32_V0.h](https://github.com/pixelmatix/SmartMatrix/blob/teensylc/src/MatrixHardware_ESP32_V0.h)
+# Mounting and button
+I have no solution to mount the LED display anywhere. For the time being I'm using half of the purse shell as an ugly mount. This display is missing the common screw mounts on HUB75 panels. I'd love to hear your mounting ideas!
 
 You can reuse the button the purse comes with, wiring it to a GPIO pin and GND. But I've noticed that button seems super fidget-y compared to normal cheap pushbuttons.
-
-I have no solution to mount the LED display anywhere. For the time being I'm using half of the purse shell as an ugly mount.
 
 # Power usage
 Brightness | Power
