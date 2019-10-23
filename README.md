@@ -3,12 +3,18 @@
 [![Youtube Demo](demo.gif)](https://www.youtube.com/watch?v=3-5VtH-2Txw)
 
 # Hardware
-* Project Mc2 LED Purse (harvest a cheap 16x32px LED display): [Amazon](https://smile.amazon.com/dp/B071LQR2QG/), [Adafruit article](https://blog.adafruit.com/2019/03/06/issue-16-hackspace-magazine-can-i-hack-it-a-smart-pixel-purse-neopixels-making-hackspacemag-biglesp/)
+* Project Mc2 LED Purse ([Usually costs ~$6](https://camelcamelcamel.com/Project-Mc2-Toy-Light-Purse/product/B071LQR2QG)): [Amazon](https://smile.amazon.com/dp/B071LQR2QG/), [Adafruit article](https://blog.adafruit.com/2019/03/06/issue-16-hackspace-magazine-can-i-hack-it-a-smart-pixel-purse-neopixels-making-hackspacemag-biglesp/)
+  * A cheap 16x32px LED display you can harvest. The deafult driver/app requires 3.5mm headphone jack and phone connected at all times, otherwise after 30 seconds your pattern will freeze, then turn off. You're also limited to like 6 colors.  So let's make our own driver!
   * If you want to daisy-chain from this display, it's missing an output socket and ribbon cables:
     * SMT 2x8 Male IDC Socket: [AliExpress](https://www.aliexpress.com/item/32989866598.html)
     * 16P IDC Cable (might have come with your panel): [AliExpress](https://www.aliexpress.com/item/32873766356.html)
-* [PCB I designed to drive HUB75 panels with an ESP32](https://github.com/rorosaurus/esp32-hub75-driver) (optional, but simplifies your wiring)
-  * If you don't want to do that, you can wire the display yourself manually using dupont connectors following `ESP32_FORUM_PINOUT` from [MatrixHardware_ESP32_V0.h](https://github.com/pixelmatix/SmartMatrix/blob/teensylc/src/MatrixHardware_ESP32_V0.h)
+* [PCB I designed to drive HUB75 panels with an ESP32](https://github.com/rorosaurus/esp32-hub75-driver) (I hope to sell this on Tindie shortly for < $10)
+  * This part is optional, but *greatly* simplifies your wiring!
+  * Female Pin Header 2X8 (connects this driver to the HUB75 panel): [Amazon](https://smile.amazon.com/gp/product/B07VJ3JCLT/), [AliExpress](https://www.aliexpress.com/item/32747224548.html)
+  * If you don't want to use my PCB, you can wire the display yourself manually using dupont connectors following `ESP32_FORUM_PINOUT` from [MatrixHardware_ESP32_V0.h](https://github.com/pixelmatix/SmartMatrix/blob/teensylc/src/MatrixHardware_ESP32_V0.h)
+* ESP32-DEVKIT-V1: [Amazon ($7)](https://smile.amazon.com/gp/product/B07Q576VWZ/), [AliExpress ($4)](https://www.aliexpress.com/item/32902307791.html)
+
+Total cost should be <$20 for a 32x16 scantype LED panel, with Wifi/BT, powered by micro-USB, capable of playing gifs, scrolling text, and FastLED!
 
 # Software
 
