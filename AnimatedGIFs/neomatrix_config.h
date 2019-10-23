@@ -62,7 +62,7 @@ bool init_done = 0;
     #pragma message "Compiling for NEOMATRIX"
 #else
     // CHANGEME, see MatrixHardware_ESP32_V0.h in SmartMatrix/src
-    #define GPIOPINOUT 3
+    #define GPIOPINOUT ESP32_FORUM_PINOUT
     #pragma message "Compiling for SMARTMATRIX with NEOMATRIX API"
     #include <SmartLEDShieldV4.h>  // if you're using SmartLED Shield V4 hardware
     #include <SmartMatrix3.h>
@@ -78,13 +78,13 @@ bool init_done = 0;
 #endif
 
 #if defined(SMARTMATRIX)
-uint8_t matrix_brightness = 255;
+uint8_t matrix_brightness = 25;
 
 #ifdef ESP32
-#pragma message "Compiling for ESP32 with 64x32 16 scan panel"
-const uint8_t kPanelType = SMARTMATRIX_HUB75_32ROW_MOD16SCAN;   // use SMARTMATRIX_HUB75_16ROW_MOD8SCAN for common 16x32 panels
-const uint16_t MATRIX_TILE_WIDTH = 64; // width of EACH NEOPIXEL MATRIX (not total display)
-const uint16_t MATRIX_TILE_HEIGHT= 96; // height of each matrix
+#pragma message "Compiling for ESP32 with 16x32 8 scan panel"
+const uint8_t kPanelType = SMARTMATRIX_HUB75_16ROW_MOD8SCAN;   // use SMARTMATRIX_HUB75_16ROW_MOD8SCAN for common 16x32 panels
+const uint16_t MATRIX_TILE_WIDTH = 32; // width of EACH NEOPIXEL MATRIX (not total display)
+const uint16_t MATRIX_TILE_HEIGHT= 16; // height of each matrix
 #elif defined(__MK66FX1M0__) // my teensy 3.6 is connected to a 64x64 panel
 #pragma message "Compiling for Teensy with 64x64 32 scan panel"
 //const uint8_t kPanelType = SMARTMATRIX_HUB75_32ROW_MOD16SCAN;   // use SMARTMATRIX_HUB75_16ROW_MOD8SCAN for common 16x32 panels
@@ -156,7 +156,7 @@ void show_callback() {
 #include "Adafruit_ILI9341.h"
 #include <FastLED_SPITFT_GFX.h>
 
-uint8_t matrix_brightness = 255;
+uint8_t matrix_brightness = 25;
 #if ILI_ROTATE == 0
 const uint16_t MATRIX_TILE_WIDTH = 320; 
 const uint16_t MATRIX_TILE_HEIGHT= 240; 

@@ -45,13 +45,13 @@ const int lzwMaxBits = 12;
     // to a different value in neomatrix_config.h
     // range 0-255
     const int defaultBrightness = 255;
-    const uint8_t kMatrixWidth = gif_size;        // known working: 32, 64, 96, 128
-    const uint8_t kMatrixHeight = gif_size;       // known working: 16, 32, 48, 64
+    const uint8_t kMatrixWidth = 32;        // known working: 32, 64, 96, 128
+    const uint8_t kMatrixHeight = 16;       // known working: 16, 32, 48, 64
     /* SmartMatrix configuration and memory allocation */
     #define COLOR_DEPTH 24                  // known working: 24, 48 - If the sketch uses type `rgb24` directly, COLOR_DEPTH must be 24
     const uint8_t kRefreshDepth = 24;       // known working: 24, 36, 48
     const uint8_t kDmaBufferRows = 2;       // known working: 2-4
-    const uint8_t kPanelType = SMARTMATRIX_HUB75_32ROW_MOD16SCAN; // use SMARTMATRIX_HUB75_16ROW_MOD8SCAN for common 16x32 panels
+    const uint8_t kPanelType = SMARTMATRIX_HUB75_16ROW_MOD8SCAN; // use SMARTMATRIX_HUB75_16ROW_MOD8SCAN for common 16x32 panels
     //const uint8_t kPanelType = SMARTMATRIX_HUB75_64ROW_MOD32SCAN;
     const uint8_t kMatrixOptions = (SMARTMATRIX_OPTIONS_NONE);    // see http://docs.pixelmatix.com/SmartMatrix for options
     const uint8_t kBackgroundLayerOptions = (SM_BACKGROUND_OPTIONS_NONE);
@@ -75,26 +75,18 @@ extern int FACTY;
 #if defined(ESP8266)
     #include <FS.h>
     #define FSO SPIFFS
-    #if gif_size == 64
-        #define GIF_DIRECTORY "/gifs64/"
-    #else
-        #define GIF_DIRECTORY "/gifs/"
-    #endif
+      #define GIF_DIRECTORY "/gifs32x16/"
     extern "C" {
         #include "user_interface.h"
     }
 #elif defined(ESP32)
-    //#include <SPIFFS.h>
-    //#define FSO SPIFFS
-    #include "FFat.h"
-    #define FSO FFat
-    #define FSOFAT
+    #include <SPIFFS.h>
+    #define FSO SPIFFS
+    //#include "FFat.h"
+    //#define FSO FFat
+    //#define FSOFAT
     // Do NOT add a trailing slash, or things will fail
-    #if gif_size == 64
-        #define GIF_DIRECTORY "/gifs64"
-    #else
-        #define GIF_DIRECTORY "/gifs"
-    #endif
+      #define GIF_DIRECTORY "/gifs32x16"
 #else
     #define FSO SD
     #define FSOSD
@@ -118,11 +110,7 @@ extern int FACTY;
     
     #if defined(ESP32)
         // ESP32 SD Library can't handle a trailing slash in the directory name
-        #if gif_size == 64
-            #define GIF_DIRECTORY "/gifs64"
-        #else
-            #define GIF_DIRECTORY "/gifs"
-        #endif
+          #define GIF_DIRECTORY "/gifs"
     #else
         // Teensy SD Library requires a trailing slash in the directory name
         #if gif_size == 64
@@ -135,4 +123,3 @@ extern int FACTY;
 
 #define DISPLAY_TIME_SECONDS 10
 #endif
-

@@ -69,8 +69,12 @@
  *    Use matrix.setMaxCalculationCpuPercentage() or matrix.setCalcRefreshRateDivider()
  */
 
+#define DISABLE_MATRIX_TEST
 #define NEOMATRIX
 #include "GifAnim_Impl.h"
+
+#define BUTTON_PIN 35
+bool previousButtonState = HIGH;
 
 // If the matrix is a different size than the GIFs, allow panning through the GIF
 // while displaying it, or bouncing it around if it's smaller than the display
@@ -140,6 +144,8 @@ void setup() {
     // serial output gets looped back into serial input
     // Hence, flush input.
     while(Serial.available() > 0) { char t = Serial.read(); t=t; }
+
+    pinMode(BUTTON_PIN, INPUT);
 }
 
 void adjust_gamma(float change) {
@@ -233,6 +239,14 @@ void loop() {
     if (debugframe) {
 	if (! gotnf) return;
     }
+
+    bool buttonState = digitalRead(BUTTON_PIN);
+    if (buttonState == LOW && previousButtonState == HIGH){
+      lastTime = millis();
+      new_file = 1;
+      index++;
+    }
+    previousButtonState = buttonState;
 
     if (millis() - lastTime > ((DISPLAY_TIME_SECONDS + longer) * 1000)) {
 	new_file = 1;
