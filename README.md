@@ -1,4 +1,4 @@
-# Use an ESP32 to drive your Project Mc2 LED purse
+# Use an ESP32 to display GIFs on your Project Mc2 LED purse
 
 I recommend using the [PCB I designed](https://github.com/rorosaurus/esp32-hub75-driver) to simplify your wiring. But there's no reason why you wouldn't wire this up manually yourself if you want! :)
 
