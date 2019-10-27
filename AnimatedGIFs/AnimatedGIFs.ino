@@ -1,72 +1,7 @@
 /*
- * Animated GIFs Display Code for SmartMatrix and 32x32 RGB LED Panels
- *
- * Uses SmartMatrix Library for Teensy 3.1 written by Louis Beaudoin at pixelmatix.com
- *
- * Written by: Craig A. Lindley
- *
- * Copyright (c) 2014 Craig A. Lindley
- * Refactoring by Louis Beaudoin (Pixelmatix)
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of
- * this software and associated documentation files (the "Software"), to deal in
- * the Software without restriction, including without limitation the rights to
- * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
- * the Software, and to permit persons to whom the Software is furnished to do so,
- * subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
- * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
- * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
- * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
-
-/*
- * This example displays 32x32 GIF animations loaded from a SD Card connected to the Teensy 3.1
- * The GIFs can be up to 32 pixels in width and height.
- * This code has been tested with 32x32 pixel and 16x16 pixel GIFs, but is optimized for 32x32 pixel GIFs.
- *
- * Wiring is on the default Teensy 3.1 SPI pins, and chip select can be on any GPIO,
- * set by defining SD_CS in the code below
- * Function     | Pin
- * DOUT         |  11
- * DIN          |  12
- * CLK          |  13
- * CS (default) |  15
- *
- * Wiring for ESP32 follows the default for the ESP32 SD Library, see: https://github.com/espressif/arduino-esp32/tree/master/libraries/SDis is on the default Teensy 3.1 SPI pins, and chip select can be on any GPIO,
- *
- * This code first looks for .gif files in the /gifs/ directory
- * (customize below with the GIF_DIRECTORY definition) then plays random GIFs in the directory,
- * looping each GIF for DISPLAY_TIME_SECONDS
- *
- * This example is meant to give you an idea of how to add GIF playback to your own sketch.
- * For a project that adds GIF playback with other features, take a look at
- * Light Appliance and Aurora:
- * https://github.com/CraigLindley/LightAppliance
- * https://github.com/pixelmatix/aurora
- *
- * If you find any GIFs that won't play properly, please attach them to a new
- * Issue post in the GitHub repo here:
- * https://github.com/pixelmatix/AnimatedGIFs/issues
- */
-
-/*
- * CONFIGURATION:
- *  - If you're using SmartLED Shield V4 (or above), uncomment the line that includes <SmartMatrixShieldV4.h>
- *  - update the "SmartMatrix configuration and memory allocation" section to match the width and height and other configuration of your display
- *  - Note for 128x32 and 64x64 displays with Teensy 3.2 - need to reduce RAM:
- *    set kRefreshDepth=24 and kDmaBufferRows=2 or set USB Type: "None" in Arduino,
- *    decrease refreshRate in setup() to 90 or lower to get good an accurate GIF frame rate
- *  - Set the chip select pin for your board.  On Teensy 3.5/3.6, the onboard microSD CS pin is "BUILTIN_SDCARD"
- *  - For ESP32 and large panels, you don't need to lower the refreshRate, but you can lower the frameRate (number of times the refresh buffer
- *    is updaed with new data per second), giving more time for the CPU to decode the GIF.
- *    Use matrix.setMaxCalculationCpuPercentage() or matrix.setCalcRefreshRateDivider()
+ * This code looks for .gif files in the /gifs32x16/ directory on SPIFFS,
+ * then loops each GIF in the directory for DISPLAY_TIME_SECONDS.
+ * It will advance to the next GIF if the button is pressed.
  */
 
 #define DISABLE_MATRIX_TEST
@@ -87,19 +22,13 @@ int OFFSETY = 0;
 int FACTX = 0;
 int FACTY = 0;
 
+// which gif file do you want to play first?
+#define FIRSTINDEX 1
+
 int num_files;
 
 // Setup method runs once, when the sketch starts
 void setup() {
-    // Wait before serial on teensy
-#ifdef KINETISK
-    delay(6000);
-#endif
-#ifdef ESP8266
-    // 32x32 GIFs on 24x32 display, hence offset of -4
-    OFFSETX = -4;
-    OFFSETY = 0;
-#endif
     Serial.println("Starting AnimatedGIFs Sketch");
     sav_setup();
 
@@ -150,6 +79,10 @@ void setup() {
     while(Serial.available() > 0) { char t = Serial.read(); t=t; }
 
     pinMode(BUTTON_PIN, INPUT);
+
+    #if ENABLE_SCROLLING == 1
+        scrollingLayer.start("Hello, world!", -1);
+    #endif
 }
 
 void adjust_gamma(float change) {

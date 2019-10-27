@@ -41,7 +41,7 @@ void die(const char *mesg) {
 /* template parameters are maxGifWidth, maxGifHeight, lzwMaxBits
  * defined in config.h
  */
-GifDecoder<gif_size, gif_size, lzwMaxBits> decoder;
+GifDecoder<gif_width, gif_height, lzwMaxBits> decoder;
 
 void screenClearCallback(void) {
 #ifdef NEOMATRIX
