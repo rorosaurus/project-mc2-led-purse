@@ -41,6 +41,8 @@ This is the bare minimum Arduino sketch that will display a gif you specify on t
 ### AnimatedGIFs
 This is a more complicated sketch that loops between all gifs in the specified folder on SPIFFS.
 
+### WifiControlledGIFs
+This builds on AnimatedGIFs sketch to add a simple wifi server to switch between gifs. Note this requires more memory, so it might not work on larger displays (like 128x64.. sorry [Furret](https://github.com/rorosaurus/FurretTotem)!)
 
 
 ## GIFs
