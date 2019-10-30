@@ -2,6 +2,8 @@
 
 [![Youtube Demo](demo.gif)](https://www.youtube.com/watch?v=3-5VtH-2Txw)
 
+[YouTube - Proof of concept WiFi controller](https://www.youtube.com/watch?v=pXGxG_d0u60)
+
 # Hardware
 * Project Mc2 LED Purse ([Usually costs ~$6](https://camelcamelcamel.com/Project-Mc2-Toy-Light-Purse/product/B071LQR2QG)): [Amazon](https://smile.amazon.com/dp/B071LQR2QG/), [Adafruit article](https://blog.adafruit.com/2019/03/06/issue-16-hackspace-magazine-can-i-hack-it-a-smart-pixel-purse-neopixels-making-hackspacemag-biglesp/)
   * A cheap 16x32px LED display you can harvest. The deafult driver/app requires 3.5mm headphone jack and phone connected at all times, otherwise after 30 seconds your pattern will freeze, then turn off. You're also limited to like 6 colors.  So let's make our own driver!
