@@ -57,9 +57,9 @@ public:
     }
     
     AsyncResponseStream *response = request->beginResponseStream("text/html");
-    response->print("<!DOCTYPE html><html><head><title>Captive Portal</title></head><body>");
-    response->printf("<a href='/NEXT'><button style='width: 100%;height: 50%;font-size: 10vw;'>NEXT .gif</button></a><br>");
-    response->printf("<a href='/PREVIOUS'><button style='width: 100%;height: 50%;font-size: 10vw;'>PREVIOUS .gif</button></a><br>");
+    response->print("<!DOCTYPE html><html  style='width: 100%; height: 100%'><head><title>Wifi Remote</title></head><body style='width: 100%; height: 100%'>");
+    response->print("<a href='/NEXT'><button style='width: 100%;height: 50%;font-size: 12vw;'>NEXT .gif</button></a>");
+    response->print("<a href='/PREVIOUS'><button style='width: 100%;height: 50%;font-size: 12vw;'>PREVIOUS .gif</button></a>");
     response->print("</body></html>");
     request->send(response);
   }
