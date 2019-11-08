@@ -34,6 +34,9 @@ The below sketches will not compile unless you install all the required librarie
 ## Sketches
 Note: some ESP32 dev boards require you to hold the BOOT button for ~3s to connect during sketch upload.
 
+### MultipleTextLayers
+Lightly modified example sketch from the SmartMatrix example library. Perfect for a minimal sketch that displays scrolling text!
+
 ### SimpleGifExample
 This is the bare minimum Arduino sketch that will display a gif you specify on the display.  
 
