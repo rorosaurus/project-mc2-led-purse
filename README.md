@@ -34,6 +34,8 @@ The below sketches will not compile unless you install all the required librarie
 ## Sketches
 Note: some ESP32 dev boards require you to hold the BOOT button for ~3s to connect during sketch upload.
 
+You can also find some example sketches for Wifi/Bluetooth/etc. in your Arduino IDE after installing ESP32 support and all your libararies! Example sketches are your friend!
+
 ### FeatureDemo
 The demo of SmartMatrix features, straight from the SmartMatrix example sketches! I've lightly modified it to remove a couple demos that get VERY bright and might use too much power. However there's still a couple that are pretty blinding - be careful!
 
