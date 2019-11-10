@@ -29,6 +29,7 @@ AsyncWebServer server(80);
 
 bool nextFlag = false;
 bool prevFlag = false;
+int newIndex = -1;
 
 // If the matrix is a different size than the GIFs, allow panning through the GIF
 // while displaying it, or bouncing it around if it's smaller than the display
@@ -41,11 +42,13 @@ int FACTY = 0;
 #define FIRSTINDEX 1
 
 int num_files;
+String filenameOptions = "";
 
 String processor(const String& var){
   if(var == "MIN_BRIGHTNESS") return String(minBrightness);
   if(var == "MAX_BRIGHTNESS") return String(maxBrightness);
   if(var == "CURRENT_BRIGHTNESS") return String(currentBrightness);
+  if(var == "LIST_FILENAME_OPTIONS") return filenameOptions;
   return String();
 }
 
@@ -76,8 +79,14 @@ public:
       if(request->hasParam("brightness")){
         AsyncWebParameter* p = request->getParam("brightness");
         currentBrightness = p->value().toInt();
-          Serial.print("New brightness: ");
-          Serial.println(currentBrightness);
+        Serial.print("New brightness: ");
+        Serial.println(currentBrightness);
+      }
+      if(request->hasParam("newFileIndex")){
+        AsyncWebParameter* p = request->getParam("newFileIndex");
+        newIndex = p->value().toInt();
+        Serial.print("New file index: ");
+        Serial.println(newIndex);
       }
       
       //Send index.htm with template processor function
@@ -132,6 +141,14 @@ void setup() {
     Serial.print("Index of files: 0 to ");
     Serial.println(num_files);
     Serial.flush();
+
+    // pre-populate the list of filenames for server
+    for (int i=0; i < num_files; i++){
+      char pathname[128];
+      getGIFFilenameByIndex(GIF_DIRECTORY, i, pathname);
+      filenameOptions += "<option value='" + String(i) + "'>" + pathname + "</option>";
+    }
+    
     // At least on teensy, due to some framework bug it seems, early
     // serial output gets looped back into serial input
     // Hence, flush input.
@@ -189,10 +206,15 @@ void loop() {
       index++;
       nextFlag = false;
     }
-    else if (prevFlag){
+    if (prevFlag){
       new_file = 1;
       index--;
       prevFlag = false;
+    }
+    if (newIndex != -1){
+      new_file = 1;
+      index = newIndex;
+      newIndex = -1;
     }
 
     if (Serial.available()) readchar = Serial.read(); else readchar = 0;
