@@ -5,30 +5,43 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-      <form action="/index.htm" class="fileForm">
-        <select name="newFileIndex" class="fileSelect" onchange="this.form.submit()">
-          <option value="" selected disabled hidden>Choose a specific .gif</option>
-          %LIST_FILENAME_OPTIONS%
-        </select>
-      </form>
+      <select id="newFileSelector" name="newFileIndex" class="fileSelect" onchange="submitFileForm()">
+        <option value="" selected disabled hidden>Choose a specific .gif</option>
+        %LIST_FILENAME_OPTIONS%
+      </select>
+      <script>
+        function submitFileForm() {
+          var http = new XMLHttpRequest();
+          var params = "newFileIndex=" + document.getElementById("newFileSelector").value;
+          http.open("GET", "/index.htm?" + params, true);
+          http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+          http.send();
+        }
+      </script>
       
       <a href='/PREVIOUS'><button class='prevButton'>PREV .gif</button></a><a href='/NEXT'><button class='nextButton'>NEXT .gif</button></a>
       
-      <form action="/index.htm" class="brightnessForm">
-        <input type="submit" id='brightnessButton' value="test" class='brightnessSubmit'>
-        <div class="slidecontainer">
-          <input type='range' name='brightness' step='1' min='%MIN_BRIGHTNESS%' max='%MAX_BRIGHTNESS%' value='%CURRENT_BRIGHTNESS%' id='brightnessSlider' class='slider'/>
-        </div>
-        <script>
-          var slider = document.getElementById("brightnessSlider");
-          var button = document.getElementById("brightnessButton");
-                  
-          button.innerHTML = button.value = 'Set Brightness to ' + slider.value;
-          
-          slider.oninput = function() {
-            button.value = 'Set Brightness to ' + this.value;
-          }
-        </script>
-      </form>
+      <input type="submit" id='brightnessButton' value="test" class='brightnessSubmit' onclick="submitBrightnessForm()">
+      <div class="slidecontainer">
+        <input type='range' name='brightness' step='1' min='%MIN_BRIGHTNESS%' max='%MAX_BRIGHTNESS%' value='%CURRENT_BRIGHTNESS%' id='brightnessSlider' class='slider'/>
+      </div>
+      <script>
+        function submitBrightnessForm() {
+          var http = new XMLHttpRequest();
+          var params = "brightness=" + document.getElementById("brightnessSlider").value;
+          http.open("GET", "/index.htm?" + params, true);
+          http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+          http.send();
+        }
+      
+        var slider = document.getElementById("brightnessSlider");
+        var button = document.getElementById("brightnessButton");
+                
+        button.innerHTML = button.value = 'Set Brightness to ' + slider.value;
+        
+        slider.oninput = function() {
+          button.value = 'Set Brightness to ' + this.value;
+        }
+      </script>
   </body>
 </html>
