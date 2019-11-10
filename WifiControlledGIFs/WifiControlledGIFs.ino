@@ -18,11 +18,17 @@
 #define NEOMATRIX
 #include "GifAnim_Impl.h"
 
+#define defaultBrightness 25
+#define minBrightness 0
+#define maxBrightness 210
+
+int currentBrightness = defaultBrightness;
+
 DNSServer dnsServer;
 AsyncWebServer server(80);
 
 bool nextFlag = false;
-bool previousFlag = false;
+bool prevFlag = false;
 
 // If the matrix is a different size than the GIFs, allow panning through the GIF
 // while displaying it, or bouncing it around if it's smaller than the display
@@ -36,6 +42,13 @@ int FACTY = 0;
 
 int num_files;
 
+String processor(const String& var){
+  if(var == "MIN_BRIGHTNESS") return String(minBrightness);
+  if(var == "MAX_BRIGHTNESS") return String(maxBrightness);
+  if(var == "CURRENT_BRIGHTNESS") return String(currentBrightness);
+  return String();
+}
+
 class CaptiveRequestHandler : public AsyncWebHandler {
 public:
   CaptiveRequestHandler() {}
@@ -47,21 +60,29 @@ public:
   }
 
   void handleRequest(AsyncWebServerRequest *request) {
-    if (request->url() == "/NEXT") {
-        Serial.println("NEXT PRESSED");
-        nextFlag = true;
+    if (request->url() == "/styles.css"){
+      request->send(SPIFFS, "/www/styles.css", "text/css");
     }
-    else if (request->url() == "/PREVIOUS") {
-        Serial.println("PREVIOUS PRESSED");
-        previousFlag = true;
+    else {
+      if (request->url() == "/NEXT") {
+          Serial.println("NEXT PRESSED");
+          nextFlag = true;
+      }
+      else if (request->url() == "/PREVIOUS") {
+          Serial.println("PREVIOUS PRESSED");
+          prevFlag = true;
+      }
+
+      if(request->hasParam("brightness")){
+        AsyncWebParameter* p = request->getParam("brightness");
+        currentBrightness = p->value().toInt();
+          Serial.print("New brightness: ");
+          Serial.println(currentBrightness);
+      }
+      
+      //Send index.htm with template processor function
+      request->send(SPIFFS, "/www/index.htm", "text/html", false, processor);
     }
-    
-    AsyncResponseStream *response = request->beginResponseStream("text/html");
-    response->print("<!DOCTYPE html><html  style='width: 100%; height: 100%'><head><title>Wifi Remote</title></head><body style='width: 100%; height: 100%'>");
-    response->print("<a href='/NEXT'><button style='width: 100%;height: 50%;font-size: 12vw;'>NEXT .gif</button></a>");
-    response->print("<a href='/PREVIOUS'><button style='width: 100%;height: 50%;font-size: 12vw;'>PREVIOUS .gif</button></a>");
-    response->print("</body></html>");
-    request->send(response);
   }
 };
 
@@ -120,12 +141,18 @@ void setup() {
         scrollingLayer.start("Hello, world!", -1);
     #endif
 
-    //your other setup stuff...
-  WiFi.softAP("myLEDPanel");
-  dnsServer.start(53, "*", WiFi.softAPIP());
-  server.addHandler(new CaptiveRequestHandler()).setFilter(ON_AP_FILTER);//only when requested from AP
-  //more handlers...
-  server.begin();
+    Serial.println("Configuring access point...");
+    WiFi.softAP("myLEDPanel");
+    //WiFi.softAP("myLEDPanel", "myPassword"); // if you want a password on your wifi
+    
+    
+    dnsServer.start(53, "*", WiFi.softAPIP());
+    server.addHandler(new CaptiveRequestHandler());
+    //more handlers...
+    server.begin();
+    Serial.print("Server started. IP Address: ");
+    // FYI, usually the IP address is 192.168.4.1, you can type that in your browser if the page doesn't open automatically!
+    Serial.println(WiFi.softAPIP());
 }
 
 void adjust_gamma(float change) {
@@ -142,6 +169,8 @@ void adjust_gamma(float change) {
 void loop() {
     dnsServer.processNextRequest();
 
+    matrixLayer.setBrightness(currentBrightness);
+    
     static int index = FIRSTINDEX;
     static int8_t new_file = 1;
     static unsigned long lastTime = millis();
@@ -160,10 +189,10 @@ void loop() {
       index++;
       nextFlag = false;
     }
-    else if (previousFlag){
+    else if (prevFlag){
       new_file = 1;
       index--;
-      previousFlag = false;
+      prevFlag = false;
     }
 
     if (Serial.available()) readchar = Serial.read(); else readchar = 0;
