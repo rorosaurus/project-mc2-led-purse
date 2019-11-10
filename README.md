@@ -18,23 +18,31 @@
 Total cost should be ~$20 for a 32x16 scantype LED panel, with Wifi/BT, powered by micro-USB, capable of playing gifs, scrolling text, and FastLED!
 
 # Software
+Use your preferred image editor to make your animated .gifs! I used Photoshop, but you could also use GIMP or something!
 
 ## Arduino
-This project uses [the Arduino IDE](https://www.arduino.cc/en/Main/Software) to program everything!  You also need to [install board manager support for ESP32](https://github.com/espressif/arduino-esp32).
+I would recommend using the following software with this board:
+* https://www.arduino.cc/en/Main/Software - The Arduino IDE, to program everything!
+  * https://github.com/espressif/arduino-esp32 - Install board manager support for ESP32
+  * https://github.com/me-no-dev/arduino-esp32fs-plugin - This Arduino IDE plugin makes it simple to upload .gifs to your ESP32
 
 ## Libraries
-The below sketches will not compile unless you install all the required libraries listed here. I recommend installing them by downloading the repository and copying the contents to `My Documents/Arduino/libraries`.
-
+You'll need to install (by downloading, renaming the folder to remove `-master`, and copying to `My Documents/Arduino/libraries`) a few libraries to drive the LED panel:
 * https://github.com/pixelmatix/SmartMatrix/tree/teensylc
+  * Please note, this is a specific branch of SmartMatrix. ESP32 support only exists in this branch.
 * https://github.com/adafruit/Adafruit-GFX-Library
 * https://github.com/marcmerlin/Framebuffer_GFX
 * https://github.com/FastLED/FastLED
 * https://github.com/marcmerlin/SmartMatrix_GFX
 
+If you want to use Wifi, you will need to install additional libraries:
+* https://github.com/me-no-dev/AsyncTCP
+* https://github.com/me-no-dev/ESPAsyncWebServer
+
 ## Sketches
 Note: some ESP32 dev boards require you to hold the BOOT button for ~3s to connect during sketch upload.
 
-You can also find some example sketches for Wifi/Bluetooth/etc. in your Arduino IDE after installing ESP32 support and all your libararies! Example sketches are your friend!
+You can also find some example sketches for Wifi/Bluetooth/etc. in your Arduino IDE after installing ESP32 support and all your libraries! Example sketches are your friend!
 
 ### FeatureDemo
 The demo of SmartMatrix features, straight from the SmartMatrix example sketches! I've lightly modified it to remove a couple demos that get VERY bright and might use too much power. However there's still a couple that are pretty blinding - be careful!
@@ -49,7 +57,7 @@ This is the bare minimum Arduino sketch that will display a gif you specify on t
 This is a more complicated sketch that loops between all gifs in the specified folder on SPIFFS.
 
 ### WifiControlledGIFs
-This builds on AnimatedGIFs sketch to add a simple wifi server to switch between gifs. Note this requires more memory, so it might not work on larger displays (like 128x64.. sorry [Furret](https://github.com/rorosaurus/FurretTotem)!)
+This builds on AnimatedGIFs sketch to add a simple wifi server to switch between gifs and control brightness! Note this requires more memory, so it might not work on larger displays (like 128x64.. sorry [Furret](https://github.com/rorosaurus/FurretTotem)!)
 
 
 ## GIFs
