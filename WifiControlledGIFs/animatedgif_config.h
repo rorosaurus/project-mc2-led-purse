@@ -37,7 +37,7 @@ extern int FACTY;
     //#define FSO FFat
     //#define FSOFAT
     // Do NOT add a trailing slash, or things will fail
-      #define GIF_DIRECTORY "/gifs32x16"
+      #define GIF_DIRECTORY "/gifs"
 #endif
 
 #endif

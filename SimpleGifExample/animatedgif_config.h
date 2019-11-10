@@ -75,7 +75,7 @@ extern int FACTY;
 #if defined(ESP8266)
     #include <FS.h>
     #define FSO SPIFFS
-      #define GIF_DIRECTORY "/gifs32x16/"
+      #define GIF_DIRECTORY "/gifs/"
     extern "C" {
         #include "user_interface.h"
     }
@@ -86,7 +86,7 @@ extern int FACTY;
     //#define FSO FFat
     //#define FSOFAT
     // Do NOT add a trailing slash, or things will fail
-      #define GIF_DIRECTORY "/gifs32x16"
+      #define GIF_DIRECTORY "/gifs"
 #else
     #define FSO SD
     #define FSOSD
