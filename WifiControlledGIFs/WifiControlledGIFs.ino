@@ -39,7 +39,7 @@ int FACTX = 0;
 int FACTY = 0;
 
 // which gif file do you want to play first?
-#define FIRSTINDEX 1
+#define FIRSTINDEX 0
 
 int num_files;
 String filenameOptions = "";
@@ -142,14 +142,7 @@ void setup() {
     Serial.print("Index of files: 0 to ");
     Serial.println(num_files);
     Serial.flush();
-
-    // pre-populate the list of filenames for server
-    for (int i=0; i < num_files; i++){
-      char pathname[128];
-      getGIFFilenameByIndex(GIF_DIRECTORY, i, pathname);
-      filenameOptions += "<option value='" + String(i) + "'>" + pathname + "</option>";
-    }
-    
+  
     // At least on teensy, due to some framework bug it seems, early
     // serial output gets looped back into serial input
     // Hence, flush input.
