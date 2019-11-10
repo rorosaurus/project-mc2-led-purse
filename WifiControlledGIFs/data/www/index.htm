@@ -8,9 +8,6 @@
       <select id="newFileSelector" name="newFileIndex" class="fileSelect" onchange="submitParam('newFileIndex', document.getElementById('newFileSelector').value)">
         <option value="" selected disabled hidden>Choose a specific .gif</option>
         %LIST_FILENAME_OPTIONS%
-        <option value="volvo">Volvo</option>
-        <option value="saab">Saab</option>
-        <option value="mercedes">Mercedes</option>
       </select>
       
       <button class='prevButton' onclick="submitParam('prev', 1)">PREV .gif</button><button class='nextButton'  onclick="submitParam('next', 1)">NEXT .gif</button>
@@ -28,7 +25,7 @@
           http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
           http.send();
           
-          window.setTimeout(resetFileSelector,2000);
+          if(parameter != "newFileIndex") resetFileSelector();
         }
         
         function resetFileSelector(){
