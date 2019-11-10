@@ -5,33 +5,34 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-      <select id="newFileSelector" name="newFileIndex" class="fileSelect" onchange="submitFileForm()">
+      <select id="newFileSelector" name="newFileIndex" class="fileSelect" onchange="submitParam('newFileIndex', document.getElementById('newFileSelector').value)">
         <option value="" selected disabled hidden>Choose a specific .gif</option>
         %LIST_FILENAME_OPTIONS%
+        <option value="volvo">Volvo</option>
+        <option value="saab">Saab</option>
+        <option value="mercedes">Mercedes</option>
       </select>
-      <script>
-        function submitFileForm() {
-          var http = new XMLHttpRequest();
-          var params = "newFileIndex=" + document.getElementById("newFileSelector").value;
-          http.open("GET", "/index.htm?" + params, true);
-          http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-          http.send();
-        }
-      </script>
       
-      <a href='/PREVIOUS'><button class='prevButton'>PREV .gif</button></a><a href='/NEXT'><button class='nextButton'>NEXT .gif</button></a>
+      <button class='prevButton' onclick="submitParam('prev', 1)">PREV .gif</button><button class='nextButton'  onclick="submitParam('next', 1)">NEXT .gif</button>
       
-      <input type="submit" id='brightnessButton' value="test" class='brightnessSubmit' onclick="submitBrightnessForm()">
+      <input type="submit" id='brightnessButton' value="test" class='brightnessSubmit' onclick="submitParam('brightness', document.getElementById('brightnessSlider').value)">
       <div class="slidecontainer">
         <input type='range' name='brightness' step='1' min='%MIN_BRIGHTNESS%' max='%MAX_BRIGHTNESS%' value='%CURRENT_BRIGHTNESS%' id='brightnessSlider' class='slider'/>
       </div>
+      
       <script>
-        function submitBrightnessForm() {
+        function submitParam(parameter, val) {
           var http = new XMLHttpRequest();
-          var params = "brightness=" + document.getElementById("brightnessSlider").value;
+          var params = parameter + "=" + val;
           http.open("GET", "/index.htm?" + params, true);
           http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
           http.send();
+          
+          window.setTimeout(resetFileSelector,2000);
+        }
+        
+        function resetFileSelector(){
+          document.getElementById('newFileSelector').value = "";
         }
       
         var slider = document.getElementById("brightnessSlider");

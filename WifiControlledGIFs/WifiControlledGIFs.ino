@@ -63,19 +63,19 @@ public:
   }
 
   void handleRequest(AsyncWebServerRequest *request) {
+    // handle other file requests
     if (request->url() == "/styles.css"){
       request->send(SPIFFS, "/www/styles.css", "text/css");
     }
-    else {
-      if (request->url() == "/NEXT") {
-          Serial.println("NEXT PRESSED");
-          nextFlag = true;
+    else { // handle parameters
+      if(request->hasParam("next")){
+        Serial.println("NEXT pressed");
+        nextFlag = true;
       }
-      else if (request->url() == "/PREVIOUS") {
-          Serial.println("PREVIOUS PRESSED");
-          prevFlag = true;
+      if(request->hasParam("prev")){
+        Serial.println("PREVIOUS pressed");
+        prevFlag = true;
       }
-
       if(request->hasParam("brightness")){
         AsyncWebParameter* p = request->getParam("brightness");
         currentBrightness = p->value().toInt();
@@ -88,7 +88,8 @@ public:
         Serial.print("New file index: ");
         Serial.println(newIndex);
       }
-      
+
+      // catch everything else
       //Send index.htm with template processor function
       request->send(SPIFFS, "/www/index.htm", "text/html", false, processor);
     }
