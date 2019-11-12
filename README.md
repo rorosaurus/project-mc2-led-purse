@@ -74,5 +74,7 @@ Brightness | Power
 25/255 | 1W (0.2A @ 5V)
 255/255 | 5W (1A @ 5V)
 
+If you plan to daisy-chain these panels, please power the panels directly. Then siphon power from your panels to your ESP32. The ESP32 board traces are not designed to supply extra power for these types of panels, but you can safely get away with it for a single LED panel if you really want to keep it simple.
+
 # More info
 This project is forked from Marc Merlin's fantastic [AnimatedGIFs](https://github.com/marcmerlin/AnimatedGIFs) repository. Please check out that page for information about how to use this project in greater detail.
