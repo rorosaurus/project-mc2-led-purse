@@ -13,7 +13,7 @@
 * [PCB I designed](https://github.com/rorosaurus/esp32-hub75-driver) to drive HUB75 panels with an ESP32: [Buy on Tindie!](https://www.tindie.com/products/18357/)
   * This part is optional, but *greatly* simplifies your wiring!
   * If you don't want to use my PCB, you can wire the display yourself manually using dupont connectors following `ESP32_FORUM_PINOUT` from [MatrixHardware_ESP32_V0.h](https://github.com/pixelmatix/SmartMatrix/blob/teensylc/src/MatrixHardware_ESP32_V0.h)
-* ESP32-DEVKIT-V1: [Amazon ($7)](https://smile.amazon.com/gp/product/B07Q576VWZ/), [AliExpress ($4)](https://www.aliexpress.com/item/32902307791.html)
+* ESP32-DEVKIT-V1: [Amazon ($7)](https://smile.amazon.com/gp/product/B07Q576VWZ/)
 
 Total cost should be ~$20 for a 32x16 scantype LED panel, with Wifi/BT, powered by micro-USB, capable of playing gifs, scrolling text, and FastLED!
 
