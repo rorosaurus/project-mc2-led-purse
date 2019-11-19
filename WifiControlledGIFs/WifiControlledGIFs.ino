@@ -27,9 +27,13 @@ int currentBrightness = defaultBrightness;
 DNSServer dnsServer;
 AsyncWebServer server(80);
 
+// which gif file do you want to play first?
+#define FIRSTINDEX 0
+
 bool nextFlag = false;
 bool prevFlag = false;
 int newIndex = -1;
+int currentIndex = FIRSTINDEX;
 
 // If the matrix is a different size than the GIFs, allow panning through the GIF
 // while displaying it, or bouncing it around if it's smaller than the display
@@ -38,9 +42,6 @@ int OFFSETY = 0;
 int FACTX = 0;
 int FACTY = 0;
 
-// which gif file do you want to play first?
-#define FIRSTINDEX 0
-
 int num_files;
 String filenameOptions = "";
 
@@ -48,6 +49,7 @@ String processor(const String& var){
   if(var == "MIN_BRIGHTNESS") return String(minBrightness);
   if(var == "MAX_BRIGHTNESS") return String(maxBrightness);
   if(var == "CURRENT_BRIGHTNESS") return String(currentBrightness);
+  if(var == "CURRENT_INDEX") return String(currentIndex);
   if(var == "LIST_FILENAME_OPTIONS") return filenameOptions;
   return String();
 }
@@ -183,6 +185,7 @@ void loop() {
     matrixLayer.setBrightness(currentBrightness);
     
     static int index = FIRSTINDEX;
+    currentIndex = index;
     static int8_t new_file = 1;
     static unsigned long lastTime = millis();
     static uint16_t frame = 0;
