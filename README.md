@@ -20,6 +20,11 @@ Total cost should be quite low for a 32x16 scantype LED panel with Wifi/BT, powe
 # Software
 Use your preferred image editor to make your animated .gifs! I used Photoshop, but you could also use GIMP or something!
 
+## Drivers
+The ESP32 cannot directly communicate over USB with your computer to reprogram itself. It [uses an onboard chip](https://docs.espressif.com/projects/esp-idf/en/latest/get-started/establish-serial-connection.html) to do so, which requires you to install a driver. For most ESP32's, you only need to install the `CP210X` driver for your appropriate operating system.
+
+[Download the driver here](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
+
 ## Arduino
 I would recommend using the following software with this board:
 * https://www.arduino.cc/en/Main/Software - The Arduino IDE, to program everything!
