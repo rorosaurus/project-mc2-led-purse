@@ -45,7 +45,9 @@ If you want to use Wifi, you will need to install additional libraries:
 * https://github.com/me-no-dev/ESPAsyncWebServer
 
 ## Sketches
-Note: some ESP32 dev boards require you to hold the BOOT button for ~3s to connect during sketch upload.
+Note: some ESP32 dev boards require you to hold the BOOT button for ~3s to connect during sketch upload. If you're using my PCB and you have attached the auto-bootloader capacitor, you don't need to worry about this! If you're using my PCB, when uploading to the board via Arduino IDE, please use the board: `DOIT ESP32 DEVKIT V1`.
+
+Keep in mind you'll need to tweak some variables to match your LED panel size, scanrate, etc.
 
 You can also find some example sketches for Wifi/Bluetooth/etc. in your Arduino IDE after installing ESP32 support and all your libraries! Example sketches are your friend!
 
