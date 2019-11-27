@@ -17,6 +17,12 @@
 
 Total cost should be quite low for a 32x16 scantype LED panel with Wifi/BT, powered by micro-USB, capable of: playing gifs, scrolling text, and FastLED!
 
+## Assembly Instructions
+Some assembly required! (Soldering ~46 pins.) Full assembly instructions and more detailed information can be found here: [`ASSEMBLY.md`](https://github.com/rorosaurus/esp32-hub75-driver/blob/master/ASSEMBLY.md)
+
+## Powering your project
+To find out the best way to power your ESP32 and LED panels, please head over to my power document: [`POWER.md`](https://github.com/rorosaurus/esp32-hub75-driver/blob/master/POWER.md)!
+
 # Software
 Use your preferred image editor to make your animated .gifs! I used Photoshop, but you could also use GIMP or something!
 
