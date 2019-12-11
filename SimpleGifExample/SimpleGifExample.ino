@@ -13,7 +13,7 @@ int FACTX = 0;
 int FACTY = 0;
 
 // this is the location of the gif you want to loop
-const char *pathname = "/gifs32x16/corkscrew.gif";
+const char *pathname = "/gifs/corkscrew.gif";
 
 // Setup method runs once, when the sketch starts
 void setup() {
